@@ -1,6 +1,7 @@
 import WebScene from "esri/WebScene";
 import SceneView from "esri/views/SceneView";
 import FeatureLayer from "esri/layers/FeatureLayer";
+import LayerView from "esri/views/layers/LayerView";
 import all from "dojo/promise/all";
 
 export default class WebSceneManager {
@@ -14,7 +15,9 @@ export default class WebSceneManager {
     public constructor(params: any) {
     }
 
-    public createScene(colors, container) {
+    public createScene(colors: [], container: string) {
+        console.log("WebSceneManager createScene", colors, container);
+
         const webscene = new WebScene({
             portalItem: {
                 id: "c894a37c07124bfcbe1ae60ba757f63e"
@@ -41,7 +44,7 @@ export default class WebSceneManager {
 
         webscene.add(countryBoundaries);
 
-        this.view = new SceneView({
+        let view = new SceneView({
             container: container,
             map: webscene,
             ui: {
@@ -50,28 +53,34 @@ export default class WebSceneManager {
         });
 
         this.layerViewLoaded.push(
-            this.view.whenLayerView(countryBoundaries)
-                .then((layerView) => {
+            view.whenLayerView(countryBoundaries)
+                .then((layerView: LayerView) => {
                     this.layerViews.push(layerView);
                 })
         );
 
-        this.view.when(() => {
-            this.view.environment.background.color = colors[0];
+        view.when((v: any) => {
+            console.log("view when", v);
+            
+            view.environment.background.color = colors[0];
             webscene.ground.surfaceColor = colors[1];
             this.viewsLoaded += 1;
         });
 
-        this.views.push(this.view);
+        this.views.push(view);
     }
 
-    public changeHue(angle) {
+    public changeHue(angle: number) {
+        console.log("WebSceneManager changeHue", angle);
+
         this.views.forEach(function (view) {
-            this.view.container.setAttribute("style", "filter:hue-rotate(" + angle + "deg)");
+            view.container.setAttribute("style", "filter:hue-rotate(" + angle + "deg)");
         });
     }
 
     public rotate() {
+        console.log("WebSceneManager start rotation");
+
         this.rotating = !this.rotating;
         if (this.viewsLoaded == 4) {
             this.views.forEach((view) => {
@@ -80,16 +89,18 @@ export default class WebSceneManager {
         }
     }
 
-    public animate(view) {
+    public animate(view: SceneView) {
+        console.log("WebSceneManager animate", view);
+
         if (this.rotating) {
-            const camera = this.view.camera.clone();
+            const camera = view.camera.clone();
             camera.position.longitude -= 1;
-            this.view.goTo(camera);
+            view.goTo(camera);
             requestAnimationFrame(() => { this.animate(view); });
         }
     }
 
-    public onFinishLoad(callback) {
+    public onFinishLoad(callback: any) {
         let loaded = [false, false, false, false];
         all(this.layerViewLoaded)
             .then(() => {

@@ -16,10 +16,10 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
             this.viewsLoaded = 0;
             this.layerViewLoaded = [];
             this.view = null;
-            console.log("WebSceneManager", params);
         }
         WebSceneManager.prototype.createScene = function (colors, container) {
             var _this = this;
+            console.log("WebSceneManager createScene", colors, container);
             var webscene = new WebScene_1.default({
                 portalItem: {
                     id: "c894a37c07124bfcbe1ae60ba757f63e"
@@ -43,31 +43,34 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
                 }
             });
             webscene.add(countryBoundaries);
-            this.view = new SceneView_1.default({
+            var view = new SceneView_1.default({
                 container: container,
                 map: webscene,
                 ui: {
                     components: []
                 }
             });
-            this.layerViewLoaded.push(this.view.whenLayerView(countryBoundaries)
+            this.layerViewLoaded.push(view.whenLayerView(countryBoundaries)
                 .then(function (layerView) {
                 _this.layerViews.push(layerView);
             }));
-            this.view.when(function () {
-                _this.view.environment.background.color = colors[0];
+            view.when(function (v) {
+                console.log("view when", v);
+                view.environment.background.color = colors[0];
                 webscene.ground.surfaceColor = colors[1];
                 _this.viewsLoaded += 1;
             });
-            this.views.push(this.view);
+            this.views.push(view);
         };
         WebSceneManager.prototype.changeHue = function (angle) {
+            console.log("WebSceneManager changeHue", angle);
             this.views.forEach(function (view) {
-                this.view.container.setAttribute("style", "filter:hue-rotate(" + angle + "deg)");
+                view.container.setAttribute("style", "filter:hue-rotate(" + angle + "deg)");
             });
         };
         WebSceneManager.prototype.rotate = function () {
             var _this = this;
+            console.log("WebSceneManager start rotation");
             this.rotating = !this.rotating;
             if (this.viewsLoaded == 4) {
                 this.views.forEach(function (view) {
@@ -77,10 +80,11 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
         };
         WebSceneManager.prototype.animate = function (view) {
             var _this = this;
+            console.log("WebSceneManager animate", view);
             if (this.rotating) {
-                var camera = this.view.camera.clone();
+                var camera = view.camera.clone();
                 camera.position.longitude -= 1;
-                this.view.goTo(camera);
+                view.goTo(camera);
                 requestAnimationFrame(function () { _this.animate(view); });
             }
         };
