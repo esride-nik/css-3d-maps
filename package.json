@@ -1,0 +1,23 @@
+{
+  "name": "css-3d-maps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "browser-sync -s -w --startPath ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esride-nik/css-3d-maps.git"
+  },
+  "author": "Raluca Nicola",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/esride-nik/css-3d-maps/issues"
+  },
+  "homepage": "https://github.com/esride-nik/css-3d-maps#readme",
+  "dependencies": {
+    "browser-sync": "^2.26.7"
+  }
+}
