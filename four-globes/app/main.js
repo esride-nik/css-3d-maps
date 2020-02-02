@@ -27,9 +27,21 @@ define(["require", "exports", "./slider", "./WebSceneManager"], function (requir
         document.getElementById("rotate").addEventListener("click", function () {
             websceneManager.rotate();
         });
+        document.onkeydown = function (evt) {
+            evt = evt || window.event;
+            if (evt.keyCode == 27) {
+                websceneManager.rotate();
+            }
+        };
         websceneManager.onFinishLoad(function () {
-            document.getElementById("rotate").style.display = "inherit";
-            document.getElementById("slider").style.display = "inherit";
+            if (websceneManager.rotating) {
+                document.getElementById("slider").setAttribute("style", "display: none !important;");
+                document.getElementById("rotate").setAttribute("style", "display: none !important;");
+            }
+            else {
+                document.getElementById("slider").setAttribute("style", "display: inherit;");
+                document.getElementById("rotate").setAttribute("style", "display: inherit;");
+            }
         });
     }
     ;

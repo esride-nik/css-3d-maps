@@ -63,14 +63,12 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
             this.views.push(view);
         };
         WebSceneManager.prototype.changeHue = function (angle) {
-            console.log("WebSceneManager changeHue", angle);
             this.views.forEach(function (view) {
                 view.container.setAttribute("style", "filter:hue-rotate(" + angle + "deg)");
             });
         };
         WebSceneManager.prototype.rotate = function () {
             var _this = this;
-            console.log("WebSceneManager start rotation");
             this.rotating = !this.rotating;
             if (this.viewsLoaded == 4) {
                 this.views.forEach(function (view) {
@@ -111,7 +109,6 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
 /*
 TODO
 
-* repair slider
 * hide slider / rotate buttons when rotate is activated. show on "Esc"
 * continue rotation after mouse moving a globe
 * get colors from URL parameters

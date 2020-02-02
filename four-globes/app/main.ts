@@ -25,13 +25,27 @@ function App() {
   websceneManager.createScene(["#1FB8B5", "#EAECAA", "#612F91"], "view3");
   websceneManager.createScene(["#E2242D", "#106BAC", "#E5922B"], "view4");
 
-  document.getElementById("rotate").addEventListener("click", function() {
+  document.getElementById("rotate").addEventListener("click", () => {
     websceneManager.rotate();
   })
 
+  document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    if (evt.keyCode == 27) {
+      websceneManager.rotate();
+    }
+  };
+
   websceneManager.onFinishLoad(() => {
-    document.getElementById("rotate").style.display = "inherit";
-    document.getElementById("slider").style.display = "inherit";
+
+    if (websceneManager.rotating) {
+      document.getElementById("slider").setAttribute("style", "display: none !important;");
+      document.getElementById("rotate").setAttribute("style", "display: none !important;");
+  }
+  else {
+    document.getElementById("slider").setAttribute("style", "display: inherit;");
+    document.getElementById("rotate").setAttribute("style", "display: inherit;");
+  }
   })
 
 };

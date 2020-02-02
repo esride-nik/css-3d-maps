@@ -7,7 +7,7 @@ import all from "dojo/promise/all";
 export default class WebSceneManager {
     private views: any[] = [];
     private layerViews: any[] = [];
-    private rotating: boolean = false;
+    public rotating: boolean = false;
     private viewsLoaded: number = 0;
     private layerViewLoaded: any[] = [];
     private view: SceneView = null;
@@ -71,16 +71,12 @@ export default class WebSceneManager {
     }
 
     public changeHue(angle: number) {
-        console.log("WebSceneManager changeHue", angle);
-
         this.views.forEach(function (view) {
             view.container.setAttribute("style", "filter:hue-rotate(" + angle + "deg)");
         });
     }
 
     public rotate() {
-        console.log("WebSceneManager start rotation");
-
         this.rotating = !this.rotating;
         if (this.viewsLoaded == 4) {
             this.views.forEach((view) => {
@@ -120,7 +116,6 @@ export default class WebSceneManager {
 /*
 TODO
 
-* repair slider
 * hide slider / rotate buttons when rotate is activated. show on "Esc"
 * continue rotation after mouse moving a globe
 * get colors from URL parameters
