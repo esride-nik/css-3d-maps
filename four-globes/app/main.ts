@@ -1,4 +1,4 @@
-// import Slider from "./slider";
+import Slider from "./slider";
 import WebSceneManager from "./WebSceneManager";
 
 function App() {
@@ -8,13 +8,15 @@ function App() {
     clockwise: true,
     startPos: "top",
   }
-//   var slider = new Slider("slider", options);
+  var slider = new Slider("slider", options);
   var targetDiv = document.getElementById("angle");
 
-//   slider.on("sliderMove", (angle) => {
-//     targetDiv.textContent = angle + "°";
-//     websceneManager.changeHue(angle);
-//   });
+  slider.on("sliderMove", (angle: number) => {
+    console.log("sliderMove", angle);
+    
+    targetDiv.textContent = angle + "°";
+    websceneManager.changeHue(angle);
+  });
 
   const websceneManager = new WebSceneManager();
 

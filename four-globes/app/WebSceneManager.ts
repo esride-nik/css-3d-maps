@@ -12,7 +12,7 @@ export default class WebSceneManager {
     private layerViewLoaded: any[] = [];
     private view: SceneView = null;
 
-    public constructor(params: any) {
+    public constructor() {
     }
 
     public createScene(colors: [], container: string) {
@@ -90,8 +90,6 @@ export default class WebSceneManager {
     }
 
     public animate(view: SceneView) {
-        console.log("WebSceneManager animate", view);
-
         if (this.rotating) {
             const camera = view.camera.clone();
             camera.position.longitude -= 1;
@@ -117,3 +115,18 @@ export default class WebSceneManager {
             });
     }
 }
+
+
+/*
+TODO
+
+* repair slider
+* hide slider / rotate buttons when rotate is activated. show on "Esc"
+* continue rotation after mouse moving a globe
+* get colors from URL parameters
+* modes: 8 globes / 4 globes / 2 globes hor / 2 globes ver / 1 globe
+* mode: rotate hue over time
+* mode: randomly activate / deactivate globes, rotate hue, change speed over time
+
+
+*/

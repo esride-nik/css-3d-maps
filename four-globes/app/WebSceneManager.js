@@ -9,7 +9,7 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
     FeatureLayer_1 = __importDefault(FeatureLayer_1);
     all_1 = __importDefault(all_1);
     var WebSceneManager = /** @class */ (function () {
-        function WebSceneManager(params) {
+        function WebSceneManager() {
             this.views = [];
             this.layerViews = [];
             this.rotating = false;
@@ -80,7 +80,6 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
         };
         WebSceneManager.prototype.animate = function (view) {
             var _this = this;
-            console.log("WebSceneManager animate", view);
             if (this.rotating) {
                 var camera = view.camera.clone();
                 camera.position.longitude -= 1;
@@ -109,4 +108,17 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
     }());
     exports.default = WebSceneManager;
 });
+/*
+TODO
+
+* repair slider
+* hide slider / rotate buttons when rotate is activated. show on "Esc"
+* continue rotation after mouse moving a globe
+* get colors from URL parameters
+* modes: 8 globes / 4 globes / 2 globes hor / 2 globes ver / 1 globe
+* mode: rotate hue over time
+* mode: randomly activate / deactivate globes, rotate hue, change speed over time
+
+
+*/ 
 //# sourceMappingURL=WebSceneManager.js.map

@@ -1,9 +1,10 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-define(["require", "exports", "./WebSceneManager"], function (require, exports, WebSceneManager_1) {
+define(["require", "exports", "./slider", "./WebSceneManager"], function (require, exports, slider_1, WebSceneManager_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    slider_1 = __importDefault(slider_1);
     WebSceneManager_1 = __importDefault(WebSceneManager_1);
     function App() {
         var options = {
@@ -11,12 +12,13 @@ define(["require", "exports", "./WebSceneManager"], function (require, exports, 
             clockwise: true,
             startPos: "top",
         };
-        //   var slider = new Slider("slider", options);
+        var slider = new slider_1.default("slider", options);
         var targetDiv = document.getElementById("angle");
-        //   slider.on("sliderMove", (angle) => {
-        //     targetDiv.textContent = angle + "°";
-        //     websceneManager.changeHue(angle);
-        //   });
+        slider.on("sliderMove", function (angle) {
+            console.log("sliderMove", angle);
+            targetDiv.textContent = angle + "°";
+            websceneManager.changeHue(angle);
+        });
         var websceneManager = new WebSceneManager_1.default();
         websceneManager.createScene(["#FAA732", "#DE1770", "#5EADE1"], "view1");
         websceneManager.createScene(["#7F2C85", "#F8EB35", "#AE1B2A"], "view2");
