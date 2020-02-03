@@ -61,7 +61,7 @@ export default class WebSceneManager {
 
         view.when((v: any) => {
             console.log("view when", v);
-            
+
             view.environment.background.color = colors[0];
             webscene.ground.surfaceColor = colors[1];
             this.viewsLoaded += 1;
@@ -72,16 +72,24 @@ export default class WebSceneManager {
 
     public changeHue(angle: number) {
         this.views.forEach(function (view) {
-            view.container.setAttribute("style", "filter:hue-rotate(" + angle + "deg)");
+            view.container.style.filter = "hue-rotate(" + angle + "deg)";
         });
     }
 
     public rotate() {
+        console.log("Switch rotate.");
         this.rotating = !this.rotating;
-        if (this.viewsLoaded == 4) {
-            this.views.forEach((view) => {
-                this.animate(view);
-            });
+        this.views.forEach((view) => {
+            this.animate(view);
+        });
+
+        if (this.rotating) {
+            document.getElementById("slider").setAttribute("style", "display: none !important;");
+            document.getElementById("rotate").setAttribute("style", "display: none !important;");
+        }
+        else {
+            document.getElementById("slider").setAttribute("style", "display: inherit;");
+            document.getElementById("rotate").setAttribute("style", "display: inherit;");
         }
     }
 
@@ -98,6 +106,7 @@ export default class WebSceneManager {
         let loaded = [false, false, false, false];
         all(this.layerViewLoaded)
             .then(() => {
+                console.log("All layer views finished loading.");
                 this.layerViews.forEach((layerView, i) => {
                     layerView.watch("updating", (value) => {
                         if (!value) {
@@ -116,12 +125,16 @@ export default class WebSceneManager {
 /*
 TODO
 
-* hide slider / rotate buttons when rotate is activated. show on "Esc"
 * continue rotation after mouse moving a globe
 * get colors from URL parameters
 * modes: 8 globes / 4 globes / 2 globes hor / 2 globes ver / 1 globe
 * mode: rotate hue over time
 * mode: randomly activate / deactivate globes, rotate hue, change speed over time
 
+
+HEUTE ABEND:
+* Sound An Stems
+* Record Globes
+* Yellow Jackets draft edit
 
 */

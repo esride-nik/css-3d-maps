@@ -1,0 +1,38 @@
+{
+    "8g": {
+        "mode": "8g",
+        "hueFrom": 100,
+        "hueTo": 200,
+        "hueTime": 2
+    },
+    "4g": {
+        "mode": "4g",
+        "hueFrom": 100,
+        "hueTo": 200,
+        "hueTime": 2
+    },
+    "4gh": {
+        "mode": "4gh",
+        "hueFrom": 100,
+        "hueTo": 200,
+        "hueTime": 2
+    },
+    "2gh": {
+        "mode": "2gh",
+        "hueFrom": 100,
+        "hueTo": 200,
+        "hueTime": 2
+    },
+    "2gv": {
+        "mode": "2gv",
+        "hueFrom": 100,
+        "hueTo": 200,
+        "hueTime": 2
+    },
+    "1g": {
+        "mode": "1g",
+        "hueFrom": 100,
+        "hueTo": 200,
+        "hueTime": 2
+    }
+}

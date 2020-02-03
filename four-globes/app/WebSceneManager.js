@@ -64,16 +64,23 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
         };
         WebSceneManager.prototype.changeHue = function (angle) {
             this.views.forEach(function (view) {
-                view.container.setAttribute("style", "filter:hue-rotate(" + angle + "deg)");
+                view.container.style.filter = "hue-rotate(" + angle + "deg)";
             });
         };
         WebSceneManager.prototype.rotate = function () {
             var _this = this;
+            console.log("Switch rotate.");
             this.rotating = !this.rotating;
-            if (this.viewsLoaded == 4) {
-                this.views.forEach(function (view) {
-                    _this.animate(view);
-                });
+            this.views.forEach(function (view) {
+                _this.animate(view);
+            });
+            if (this.rotating) {
+                document.getElementById("slider").setAttribute("style", "display: none !important;");
+                document.getElementById("rotate").setAttribute("style", "display: none !important;");
+            }
+            else {
+                document.getElementById("slider").setAttribute("style", "display: inherit;");
+                document.getElementById("rotate").setAttribute("style", "display: inherit;");
             }
         };
         WebSceneManager.prototype.animate = function (view) {
@@ -90,6 +97,7 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
             var loaded = [false, false, false, false];
             all_1.default(this.layerViewLoaded)
                 .then(function () {
+                console.log("All layer views finished loading.");
                 _this.layerViews.forEach(function (layerView, i) {
                     layerView.watch("updating", function (value) {
                         if (!value) {
@@ -109,13 +117,17 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
 /*
 TODO
 
-* hide slider / rotate buttons when rotate is activated. show on "Esc"
 * continue rotation after mouse moving a globe
 * get colors from URL parameters
 * modes: 8 globes / 4 globes / 2 globes hor / 2 globes ver / 1 globe
 * mode: rotate hue over time
 * mode: randomly activate / deactivate globes, rotate hue, change speed over time
 
+
+HEUTE ABEND:
+* Sound An Stems
+* Record Globes
+* Yellow Jackets draft edit
 
 */ 
 //# sourceMappingURL=WebSceneManager.js.map
