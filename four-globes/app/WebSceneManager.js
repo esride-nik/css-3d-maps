@@ -62,10 +62,15 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
                 _this.viewsLoaded += 1;
             });
             this.views.push(view);
+            // re-enable animation after interaction
+            view.watch("interacting", function (interacting) {
+                if (!interacting) {
+                    _this.animate(view);
+                }
+            });
         };
         WebSceneManager.prototype.changeHue = function (angle) {
             var _this = this;
-            console.log("hue", angle);
             this.views.forEach(function (view) {
                 _this.angle = angle;
                 view.container.style.filter = "hue-rotate(" + angle + "deg)";
@@ -92,15 +97,12 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
             if (this.rotating) {
                 var camera = view.camera.clone();
                 camera.position.longitude -= 1;
-                view.goTo(camera);
+                if (view) {
+                    view.goTo(camera);
+                }
                 requestAnimationFrame(function () { _this.animate(view); });
                 if (this.config && this.config.hueFrom != this.config.hueTo) {
                     var newAngle = this.angle += this.config.hueFactor;
-                    // let newAngle = this.angle+=this.config.hueFactor >= this.config.hueFrom 
-                    //                 ? this.angle+=this.config.hueFactor <= this.config.hueTo 
-                    //                     ? this.angle+=this.config.hueFactor
-                    //                     : this.config.hueFrom
-                    //                 : this.config.hueTo
                     if (newAngle < this.config.hueFrom || newAngle > this.config.hueTo) {
                         if (this.config.hueFactor > 0) {
                             newAngle = this.config.hueFrom;
