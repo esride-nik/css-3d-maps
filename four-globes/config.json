@@ -1,38 +1,38 @@
 {
     "8g": {
         "mode": "8g",
-        "hueFrom": 100,
-        "hueTo": 200,
-        "hueTime": 2
+        "hueFrom": 0,
+        "hueTo": 360,
+        "hueFactor": 1
     },
     "4g": {
         "mode": "4g",
-        "hueFrom": 100,
-        "hueTo": 200,
-        "hueTime": 2
+        "hueFrom": 0,
+        "hueTo": 360,
+        "hueFactor": 1
     },
     "4gh": {
         "mode": "4gh",
-        "hueFrom": 100,
-        "hueTo": 200,
-        "hueTime": 2
+        "hueFrom": 0,
+        "hueTo": 360,
+        "hueFactor": 1
     },
     "2gh": {
         "mode": "2gh",
-        "hueFrom": 100,
-        "hueTo": 200,
-        "hueTime": 2
+        "hueFrom": 0,
+        "hueTo": 360,
+        "hueFactor": 1
     },
     "2gv": {
         "mode": "2gv",
-        "hueFrom": 100,
-        "hueTo": 200,
-        "hueTime": 2
+        "hueFrom": 0,
+        "hueTo": 360,
+        "hueFactor": 1
     },
     "1g": {
         "mode": "1g",
-        "hueFrom": 100,
-        "hueTo": 200,
-        "hueTime": 2
+        "hueFrom": 0,
+        "hueTo": 360,
+        "hueFactor": 1
     }
 }

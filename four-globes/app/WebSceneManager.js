@@ -16,6 +16,7 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
             this.viewsLoaded = 0;
             this.layerViewLoaded = [];
             this.view = null;
+            this.angle = 0;
         }
         WebSceneManager.prototype.createScene = function (colors, container) {
             var _this = this;
@@ -63,7 +64,10 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
             this.views.push(view);
         };
         WebSceneManager.prototype.changeHue = function (angle) {
+            var _this = this;
+            console.log("hue", angle);
             this.views.forEach(function (view) {
+                _this.angle = angle;
                 view.container.style.filter = "hue-rotate(" + angle + "deg)";
             });
         };
@@ -90,6 +94,23 @@ define(["require", "exports", "esri/WebScene", "esri/views/SceneView", "esri/lay
                 camera.position.longitude -= 1;
                 view.goTo(camera);
                 requestAnimationFrame(function () { _this.animate(view); });
+                if (this.config && this.config.hueFrom != this.config.hueTo) {
+                    var newAngle = this.angle += this.config.hueFactor;
+                    // let newAngle = this.angle+=this.config.hueFactor >= this.config.hueFrom 
+                    //                 ? this.angle+=this.config.hueFactor <= this.config.hueTo 
+                    //                     ? this.angle+=this.config.hueFactor
+                    //                     : this.config.hueFrom
+                    //                 : this.config.hueTo
+                    if (newAngle < this.config.hueFrom || newAngle > this.config.hueTo) {
+                        if (this.config.hueFactor > 0) {
+                            newAngle = this.config.hueFrom;
+                        }
+                        else {
+                            newAngle = this.config.hueTo;
+                        }
+                    }
+                    this.changeHue(newAngle);
+                }
             }
         };
         WebSceneManager.prototype.onFinishLoad = function (callback) {

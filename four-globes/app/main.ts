@@ -131,6 +131,7 @@ function App() {
     })
       .then((response: any) => {
         jConfig = response.data[config];
+        websceneManager.config = jConfig;
         console.log("jConfig", jConfig);
         applyConfig();
       });

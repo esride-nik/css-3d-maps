@@ -120,6 +120,7 @@ define(["require", "exports", "./slider", "./WebSceneManager", "esri/request"], 
             })
                 .then(function (response) {
                 jConfig = response.data[config];
+                websceneManager.config = jConfig;
                 console.log("jConfig", jConfig);
                 applyConfig();
             });

@@ -11,6 +11,8 @@ export default class WebSceneManager {
     private viewsLoaded: number = 0;
     private layerViewLoaded: any[] = [];
     private view: SceneView = null;
+    private angle: number = 0;
+    public config: any;
 
     public constructor() {
     }
@@ -71,7 +73,9 @@ export default class WebSceneManager {
     }
 
     public changeHue(angle: number) {
-        this.views.forEach(function (view) {
+        console.log("hue", angle);
+        this.views.forEach((view: SceneView) => {
+            this.angle = angle;
             view.container.style.filter = "hue-rotate(" + angle + "deg)";
         });
     }
@@ -99,6 +103,24 @@ export default class WebSceneManager {
             camera.position.longitude -= 1;
             view.goTo(camera);
             requestAnimationFrame(() => { this.animate(view); });
+
+            if (this.config && this.config.hueFrom != this.config.hueTo) {
+                let newAngle: number = this.angle += this.config.hueFactor;
+                // let newAngle = this.angle+=this.config.hueFactor >= this.config.hueFrom 
+                //                 ? this.angle+=this.config.hueFactor <= this.config.hueTo 
+                //                     ? this.angle+=this.config.hueFactor
+                //                     : this.config.hueFrom
+                //                 : this.config.hueTo
+                if (newAngle < this.config.hueFrom || newAngle > this.config.hueTo) {
+                    if (this.config.hueFactor > 0) {
+                        newAngle = this.config.hueFrom;
+                    }
+                    else {
+                        newAngle = this.config.hueTo;
+                    }
+                }
+                this.changeHue(newAngle);
+            }
         }
     }
 
